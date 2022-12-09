@@ -27,10 +27,20 @@ jobs:
           # Post reports as comments in GitHub PRs
           #cat results.txt >> report.md
           #cml comment create report.md
-          echo "MODEL METRICS" > report.md
-          cat metrics.txt >> report.md
           
-          cml asset publish feature_importance.png --md >> report.md
-          cml asset publish residuals.png --md >> report.md
+          #echo "MODEL METRICS" > report.md
+          #cat metrics.txt >> report.md
+          
+          #cml asset publish feature_importance.png --md >> report.md
+          #cml asset publish residuals.png --md >> report.md
+          # run the workflow as job
+          pip install curl
+          echo "RUN AS A CLOUDERA JOB" 
+          export PROJECTID="t7fm-mr8d-orog-kyx6"
+          export JOBID="ogcn-69od-9zie-05zy"
+          
+          curl -X POST -H "authorization: Bearer $API_KEY" "https://$CDSW_DOMAIN/api/v2/projects/$PROJECTID/jobs/$JOBID/runs" -H "Content-Type: application/json" -d "{ \"arguments\": \"string\", \"environment\": { \"additionalProp1\": \"string\", \"additionalProp2\": \"string\", \"additionalProp3\": \"string\" }, \"job_id\": \"string\", \"project_id\": \"string\"}"
+
+
           
           cml comment create --pr --publish report.md
