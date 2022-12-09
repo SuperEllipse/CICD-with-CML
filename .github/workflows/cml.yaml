@@ -34,9 +34,14 @@ jobs:
           #cml asset publish feature_importance.png --md >> report.md
           #cml asset publish residuals.png --md >> report.md
           # run the workflow as job
+          apk add --update curl
+          apk add jq
+          
           pip install curl
           echo "RUN AS A CLOUDERA JOB" 
           export PROJECTID="t7fm-mr8d-orog-kyx6"
+          export $API_KEY="70065a0822b6984c6f1d9a25b3d4026ecb03efe7a3237cca4e68c5264629bd12.fb10bedc4e5d8204fec1206ab579cd7ab2bacc90b1117d62a8aec6165c8457bd"
+          export $CDSW_DOMAIN="ml-0055bbfd-402.se-indo.a465-9q4k.cloudera.site"
           export JOBID="ogcn-69od-9zie-05zy"
           
           curl -X POST -H "authorization: Bearer $API_KEY" "https://$CDSW_DOMAIN/api/v2/projects/$PROJECTID/jobs/$JOBID/runs" -H "Content-Type: application/json" -d "{ \"arguments\": \"string\", \"environment\": { \"additionalProp1\": \"string\", \"additionalProp2\": \"string\", \"additionalProp3\": \"string\" }, \"job_id\": \"string\", \"project_id\": \"string\"}"
